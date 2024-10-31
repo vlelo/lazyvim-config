@@ -49,7 +49,6 @@ require("lazy").setup({
 
         -- Extras
         { import = "lazyvim.plugins.extras.vscode" },
-        { import = "vleo.extras.hydra" },
 
         { import = "plugins" },
         { import = "plugins.lang" },
