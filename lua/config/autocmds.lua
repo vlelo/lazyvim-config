@@ -12,6 +12,23 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     command = "setlocal noundofile",
 })
 
+vim.api.nvim_create_user_command("R", function()
+    vim.cmd("tabnew ~")
+    vim.cmd("tabclose #")
+    require("dashboard"):instance()
+    vim.fn.chdir(vim.fn.expand("~", nil, nil))
+    local startpage = vim.api.nvim_get_current_buf()
+    local buffers = vim.api.nvim_list_bufs()
+    for _, buf in ipairs(buffers) do
+        if buf ~= startpage then
+            vim.api.nvim_buf_delete(buf, { force = true })
+        end
+    end
+    for _, lsp in pairs(vim.lsp.get_clients()) do
+        vim.lsp.stop_client(lsp.id)
+    end
+end, { desc = "Restart Neovim session" })
+
 -- vim.api.nvim_create_autocmd("FileType", {
 --     group = augroup("set_formatoptions"),
 --     command = "set formatoptions-=o",

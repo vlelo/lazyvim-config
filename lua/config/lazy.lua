@@ -46,6 +46,7 @@ require("lazy").setup({
 
         -- Util
         { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
+        { import = "lazyvim.plugins.extras.util.project" },
 
         -- Extras
         { import = "lazyvim.plugins.extras.vscode" },
