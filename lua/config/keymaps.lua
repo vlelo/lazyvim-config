@@ -45,3 +45,5 @@ vim.keymap.set("n", "<c-c><c-c>", function()
     vim.g.force_exit = true
     vim.api.nvim_input("<cmd>qa<cr>")
 end, { desc = "Quit Noevim Force" })
+
+vim.keymap.set("t", "##", "<cmd>put #<cr>", { desc = "Insert alternate file name in terminal" })
