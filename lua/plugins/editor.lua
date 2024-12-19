@@ -1,14 +1,4 @@
 return {
-    -- {
-    --     "nvim-telescope/telescope.nvim",
-    --     opts = function(_, opts)
-    --         local actions = require("telescope.actions")
-    --         opts.defaults.mappings.i["<C-i>"] = actions.cycle_history_next
-    --         opts.defaults.mappings.i["<C-o>"] = actions.cycle_history_prev
-    --
-    --         return opts
-    --     end,
-    -- },
     {
         "folke/flash.nvim",
         opts = {
