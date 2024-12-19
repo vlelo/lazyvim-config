@@ -11,16 +11,10 @@ return {
         opts = function(_, opts)
             local utils = require("yanky.utils")
             local actions = require("yanky.picker").actions
-            local mappings = require("yanky.telescope.mapping")
 
             opts.picker = {
                 select = {
                     action = actions.set_register(utils.get_default_register()),
-                },
-                telescope = {
-                    mappings = {
-                        default = mappings.set_register(utils.get_default_register()),
-                    },
                 },
             }
 
@@ -56,93 +50,54 @@ return {
             },
         },
     },
+
     {
-        "hrsh7th/nvim-cmp",
-        dependencies = {
-            "micangl/cmp-vimtex",
-            "hrsh7th/cmp-cmdline",
+        "rachartier/tiny-inline-diagnostic.nvim",
+        event = "VeryLazy", -- Or `LspAttach`
+        priority = 1000, -- needs to be loaded in first
+        config = function()
+            vim.diagnostic.config({ virtual_text = false })
+            require("tiny-inline-diagnostic").setup({
+                preset = "modern",
+                options = {
+                    show_source = true,
+
+                    multiple_diag_under_cursor = false,
+
+                    multilines = true,
+
+                    show_all_diags_on_cursorline = true,
+
+                    virt_texts = {
+                        priority = 2048,
+                    },
+                },
+            })
+        end,
+    },
+    {
+        "saghen/blink.cmp",
+        opts = {
+            keymap = {
+                ["<C-k>"] = { "select_and_accept" },
+            },
+            completion = {
+                menu = {
+                    border = "rounded",
+                    scrollbar = true,
+                },
+                documentation = {
+                    auto_show = true,
+                    auto_show_delay_ms = 200,
+                    window = {
+                        border = "rounded",
+                        scrollbar = true,
+                    },
+                },
+                ghost_text = {
+                    enabled = true,
+                },
+            },
         },
-        ---@param opts cmp.ConfigSchema
-        opts = function(_, opts)
-            local cmp = require("cmp")
-
-            -- sources
-            table.insert(opts.sources, { name = "vimtex" })
-
-            -- mappings
-            opts.mapping = vim.tbl_deep_extend("force", opts.mapping, {
-                ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-1)),
-                ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(1)),
-                ["<C-c>"] = cmp.mapping({
-                    i = cmp.mapping.abort(),
-                    c = cmp.mapping.close(),
-                }),
-                ["<C-k>"] = cmp.mapping.confirm({
-                    behavior = cmp.ConfirmBehavior.Insert,
-                    select = true,
-                }),
-            })
-
-            opts.window = {
-                documentation = cmp.config.window.bordered(),
-                completion = cmp.config.window.bordered(),
-            }
-
-            return opts
-        end,
-        init = function()
-            local cmp = require("cmp")
-            vim.cmd([[
-               func EatcharAbbr(pat)
-                let c = nr2char(getchar(0))
-                return (c =~ a:pat) ? '' : c
-               endfunc
-               cabbr <silent> e e ./<C-R>=EatcharAbbr('\s')<CR>
-            ]])
-            cmp.setup.cmdline(":", {
-                mapping = cmp.mapping.preset.cmdline({
-                    ["<C-k>"] = {
-                        c = function()
-                            cmp.confirm({
-                                behavior = cmp.ConfirmBehavior.Insert,
-                                select = true,
-                            })
-                            cmp.complete()
-                        end,
-                    },
-                    ["<C-Space>"] = cmp.mapping.complete(),
-                }),
-                confirm_opts = {
-                    behavior = cmp.ConfirmBehavior.Insert,
-                    select = true,
-                },
-                -- sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
-                sources = cmp.config.sources({
-                    {
-                        name = "path",
-                        priority = 1,
-                    },
-                    {
-                        name = "cmdline",
-                        option = {
-                            ignore_cmds = { "edit" },
-                        },
-                    },
-                }),
-                formatting = {
-                    format = function(entry, item)
-                        if entry.source.name == "cmdline" then
-                            item.kind = ""
-                        else
-                            local icons = LazyVim.config.icons.kinds
-                            if icons[item.kind] then
-                                item.kind = icons[item.kind] .. item.kind
-                            end
-                        end
-                        return item
-                    end,
-                },
-            })
-        end,
     },
 }

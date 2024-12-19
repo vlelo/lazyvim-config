@@ -30,9 +30,12 @@ require("lazy").setup({
         -- UI
         { import = "lazyvim.plugins.extras.ui.edgy" },
 
+        -- AI
+        { import = "lazyvim.plugins.extras.ai.copilot" },
+        { import = "lazyvim.plugins.extras.ai.copilot-chat" },
+
         -- Coding
-        { import = "lazyvim.plugins.extras.coding.copilot" },
-        { import = "lazyvim.plugins.extras.coding.copilot-chat" },
+        -- { import = "lazyvim.plugins.extras.coding.blink" },
         { import = "lazyvim.plugins.extras.coding.mini-surround" },
         { import = "lazyvim.plugins.extras.coding.yanky" },
         { import = "lazyvim.plugins.extras.coding.luasnip" },
@@ -47,6 +50,10 @@ require("lazy").setup({
         -- Util
         { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
         { import = "lazyvim.plugins.extras.util.project" },
+
+        -- DAP
+        { import = "lazyvim.plugins.extras.dap.core" },
+        { import = "lazyvim.plugins.extras.dap.nlua" },
 
         -- Extras
         { import = "lazyvim.plugins.extras.vscode" },

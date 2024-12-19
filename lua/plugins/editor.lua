@@ -1,14 +1,14 @@
 return {
-    {
-        "nvim-telescope/telescope.nvim",
-        opts = function(_, opts)
-            local actions = require("telescope.actions")
-            opts.defaults.mappings.i["<C-i>"] = actions.cycle_history_next
-            opts.defaults.mappings.i["<C-o>"] = actions.cycle_history_prev
-
-            return opts
-        end,
-    },
+    -- {
+    --     "nvim-telescope/telescope.nvim",
+    --     opts = function(_, opts)
+    --         local actions = require("telescope.actions")
+    --         opts.defaults.mappings.i["<C-i>"] = actions.cycle_history_next
+    --         opts.defaults.mappings.i["<C-o>"] = actions.cycle_history_prev
+    --
+    --         return opts
+    --     end,
+    -- },
     {
         "folke/flash.nvim",
         opts = {
@@ -44,5 +44,20 @@ return {
 
             return opts
         end,
+    },
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        opts = {
+            filesystem = {
+                filtered_items = {
+                    visible = true,
+                    hide_dotfiles = true,
+                    hide_gitignored = true,
+                    hide_hidden = true,
+                },
+                hijack_netrw_behavior = "disabled",
+            },
+            close_if_last_window = true,
+        },
     },
 }

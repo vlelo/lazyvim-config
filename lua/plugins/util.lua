@@ -11,7 +11,7 @@ return {
                 end
             end,
             open_mapping = "<F12>",
-            direction = "float",
+            direction = "tab",
             close_on_exit = false,
             float_opts = {
                 border = "curved",
@@ -41,8 +41,8 @@ return {
                 callback = function(event)
                     vim.keymap.set(
                         "t",
-                        "<c-\\>",
-                        '<Cmd>exe v:count1 . "ToggleTerm direction=float"<CR>',
+                        "<c-/>",
+                        '<Cmd>exe v:count1 . "ToggleTerm direction=tab"<CR>',
                         { buffer = event.buf }
                     )
                     vim.keymap.set(
@@ -59,8 +59,8 @@ return {
         cmd = { "ToggleTerm" },
         keys = {
             {
-                "<c-\\>",
-                '<cmd>execute v:count1 . "ToggleTerm direction=float"<cr>',
+                "<c-/>",
+                '<cmd>execute v:count1 . "ToggleTerm direction=tab"<cr>',
                 desc = "Floating terminal",
                 mode = { "n", "i" },
             },
@@ -69,6 +69,25 @@ return {
                 '<cmd>execute v:count1 . "ToggleTerm direction=horizontal"<cr>',
                 desc = "Horizontal terminal",
                 mode = { "n", "i" },
+            },
+        },
+    },
+    {
+        "folke/edgy.nvim",
+        opts = {
+            bottom = {
+                -- toggleterm / lazyterm at the bottom with a height of 40% of the screen
+                {
+                    ft = "toggleterm",
+                    size = { height = 0.4 },
+                    filter = function(buf, win)
+                        local terms = require("toggleterm.terminal")
+                        local _, term = terms.identify()
+                        return vim.api.nvim_win_get_config(win).relative == ""
+                            and term ~= nil
+                            and term.direction ~= "tab"
+                    end,
+                },
             },
         },
     },

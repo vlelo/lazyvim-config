@@ -3,24 +3,27 @@ return {
     opts = {
         servers = {
             svlangserver = {
-                init_options = {
-                    settings = {
+                settings = {
+                    systemverilog = {
                         includeIndexing = { "**/*.{sv,svh}" },
-                        excludeIndexing = { "sim/**/*.sv*" },
-                        defines = {},
-                        -- launchConfiguration = "/opt/homebrew/bin/verilator -sv -Wall --lint-only",
-                        launchConfiguration = "verilator -sv -Wall --lint-only",
-                        -- formatCommand = "/Users/vleo/.local/share/nvim/mason/bin/verible-verilog-format",
-                        formatCommand = "verible-verilog-format"
-                            .. "--assignment_statement_alignment=align"
-                            .. "--case_items_alignment=align"
-                            .. "--class_member_variable_alignment=align"
+                        -- libraryIndexing = { "**/*.sv" },
+                        linter = "verilator",
+                        launchConfiguration = "/opt/homebrew/bin/verilator -sv -Wall --lint-only --timing",
+                        -- launchConfiguration = "verilator -sv -Wall -Wno-parameter-name-style --lint-only",
+                        formatCommand = "/Users/vleo/.local/share/nvim/mason/bin/verible-verilog-format"
+                            .. " --indentation_spaces=4"
+                            .. " --assignment_statement_alignment=align"
+                            .. " --case_items_alignment=align"
+                            .. " --class_member_variable_alignment=align"
                             .. " --distribution_items_alignment=align"
-                            .. "--enum_assignment_statement_alignment=align"
-                            .. "--port_declarations_alignment=align"
-                            .. "--port_declarations_indentation=indent",
+                            .. " --enum_assignment_statement_alignment=align"
+                            .. " --port_declarations_alignment=align"
+                            .. " --port_declarations_indentation=indent",
                     },
                 },
+            },
+            verible = {
+                cmd = { "verible-verilog-ls", "--rules_config_search" },
             },
         },
     },

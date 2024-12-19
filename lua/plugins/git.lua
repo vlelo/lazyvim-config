@@ -4,12 +4,15 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "sindrets/diffview.nvim",
-            "nvim-telescope/telescope.nvim",
+            -- "nvim-telescope/telescope.nvim",
+        },
+        opts = {
+            graph_style = "unicode",
         },
         config = true,
         cmd = { "Neogit" },
         keys = {
-            { "<leader>G", ":Neogit<CR>", desc = "Neogit" },
+            { "<leader>gg", ":Neogit<CR>", desc = "Neogit" },
         },
     },
     {

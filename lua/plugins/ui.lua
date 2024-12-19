@@ -1,12 +1,10 @@
 return {
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        opts = function(_, opts)
-            opts.indent = nil
-
-            return opts
-        end,
-    },
+    -- {
+    --     "lukas-reineke/indent-blankline.nvim",
+    --     opts = {
+    --         exclude = { filetypes = { "oil" } },
+    --     },
+    -- },
     {
         "folke/edgy.nvim",
         opts = {
@@ -48,7 +46,7 @@ return {
     },
     {
         "OXY2DEV/foldtext.nvim",
-        lazy = false,
+        -- lazy = false,
         opts = {
             default = {
                 -- {
@@ -104,4 +102,5 @@ return {
             },
         },
     },
+    { "tiagovla/scope.nvim", config = true },
 }

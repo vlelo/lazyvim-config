@@ -13,9 +13,8 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 vim.api.nvim_create_user_command("R", function()
-    vim.cmd("tabnew ~")
+    vim.cmd("tabnew")
     vim.cmd("tabclose #")
-    require("dashboard"):instance()
     vim.fn.chdir(vim.fn.expand("~", nil, nil))
     local startpage = vim.api.nvim_get_current_buf()
     local buffers = vim.api.nvim_list_bufs()
@@ -27,6 +26,7 @@ vim.api.nvim_create_user_command("R", function()
     for _, lsp in pairs(vim.lsp.get_clients()) do
         vim.lsp.stop_client(lsp.id)
     end
+    require("snacks").dashboard()
 end, { desc = "Restart Neovim session" })
 
 -- vim.api.nvim_create_autocmd("FileType", {

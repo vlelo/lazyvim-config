@@ -3,7 +3,7 @@
 -- Add any additional keymaps here
 
 -- remove default mapping and keep digraphs
-vim.keymap.set("i", "<C-i>", "<C-k>", { desc = "Digraphs" })
+vim.keymap.set("i", "<C-;>", "<C-k>", { desc = "Digraphs" })
 
 -- vim.keymap.del("n", "<S-h>")
 -- vim.keymap.del("n", "<S-l>")
@@ -47,3 +47,8 @@ vim.keymap.set("n", "<c-c><c-c>", function()
 end, { desc = "Quit Noevim Force" })
 
 vim.keymap.set("t", "##", "<cmd>put #<cr>", { desc = "Insert alternate file name in terminal" })
+
+--
+-- Disable stupid LazyVim mappings
+--
+vim.keymap.del("n", "<leader>gG") -- lazygit in root
