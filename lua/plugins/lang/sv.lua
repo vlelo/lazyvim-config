@@ -5,7 +5,7 @@ return {
             svlangserver = {
                 settings = {
                     systemverilog = {
-                        includeIndexing = { "**/*.{sv,svh}" },
+                        includeIndexing = { "**/*.{sv,svh}", "hdl/src/*.{sv,svh}", "hdl/src/test/*.{sv,svh}" },
                         -- libraryIndexing = { "**/*.sv" },
                         linter = "verilator",
                         launchConfiguration = "/opt/homebrew/bin/verilator -sv -Wall --lint-only --timing",

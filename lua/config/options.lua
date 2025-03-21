@@ -35,3 +35,36 @@ vim.opt.iskeyword:append("-")
 -- LazyVim options
 vim.g.lazyvim_python_lsp = "basedpyright"
 -- vim.g.lazyvim_picker = "telescope"
+
+if vim.g.neovide then
+    local function update_env_from_login_shell()
+        local shell = os.getenv("SHELL") or "/bin/zsh"
+        local cmd = " -l -c " .. "source ~/.config/zsh/.zshenv;" .. "source ~/.config/zsh/.zshrc;" .. "env"
+        local output = vim.fn.system(shell .. cmd)
+        if vim.v.shell_error ~= 0 then
+            vim.notify("Failed to get environment from login shell", vim.log.levels.ERROR)
+            return
+        end
+        for line in output:gmatch("[^\r\n]+") do
+            local key, value = line:match("^(.-)=(.*)$")
+            if key and value then
+                vim.env[key] = value
+            end
+        end
+    end
+
+    vim.g.neovide_refresh_rate = 120
+    vim.g.neovide_cursor_antialiasing = true
+    vim.g.neovide_cursor_animate_command_line = false
+    vim.g.neovide_input_macos_option_key_is_meta = "both"
+    vim.g.neovide_input_ime = false
+    vim.notify("Suca porcodio")
+
+    update_env_from_login_shell()
+
+    if vim.fn.getcwd() == "/" then
+        if vim.fn.argc() == 0 then
+            vim.fn.chdir(vim.fn.expand("~", nil, nil))
+        end
+    end
+end

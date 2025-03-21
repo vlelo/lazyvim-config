@@ -16,7 +16,7 @@ return {
         config = true,
         cmd = { "Neogit" },
         keys = {
-            { "<leader>gg", ":Neogit<CR>", desc = "Neogit" },
+            { "<leader>gg", "<cmd>Neogit<CR>", desc = "Neogit" },
         },
     },
     {

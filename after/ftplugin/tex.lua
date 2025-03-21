@@ -4,6 +4,7 @@ vim.o.formatoptions = vim.o.formatoptions .. "t"
 vim.o.spell = true
 vim.o.cmdheight = 1
 vim.o.sidescrolloff = 0
+vim.o.conceallevel = 0
 
 -- vim.diagnostic.config({
 -- 	update_in_insert = false,

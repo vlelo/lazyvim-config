@@ -7,7 +7,7 @@ return {
             -- vim.g.vimtex_imaps_leader = ';'
 
             -- syntax highlighting
-            vim.g.vimtex_syntax_enabled = 0
+            vim.g.vimtex_syntax_enabled = 1
             vim.g.vimtex_syntax_conceal_disable = 1
 
             -- indentation
@@ -27,6 +27,15 @@ return {
 
             -- compilation
             vim.g.vimtex_compiler_method = "latexmk"
+            vim.g.vimtex_compiler_latexmk_engines = {
+                _ = "-lualatex",
+                pdfdvi = "-pdfdvi",
+                pdfps = "-pdfps",
+                pdflatex = "-pdf",
+                luatex = "-lualatex",
+                lualatex = "-lualatex",
+                xelatex = "-xelatex",
+            }
             vim.g.vimtex_compiler_latexmk = {
                 aux_dir = "aux",
                 out_dir = "out/pdf",
@@ -36,12 +45,13 @@ return {
                 hooks = {},
                 options = {
                     "-lualatex",
+                    "-verbose",
                     "-shell-escape",
                     "-halt-on-error",
-                    "-file-line-error",
                     "-synctex=1",
                     "-interaction=nonstopmode",
                     "-recorder",
+                    -- "-file-line-error",
                 },
             }
             local uname = (vim.uv or vim.loop).os_uname().sysname
@@ -55,11 +65,20 @@ return {
             end
 
             vim.g.vimtex_quickfix_open_on_warning = 0
-            vim.g.vimtex_quickfix_ignore_filters = {
-                "Overfull",
-                "Underfull",
-                "inputenc package ignored with utf8 based engines.",
-            }
+            vim.g.vimtex_quickfix_method = "pplatex"
+            -- vim.g.vimtex_quickfix_ignore_filters = {
+            --     "Overfull",
+            --     "Underfull",
+            -- }
         end,
+    },
+    {
+        "nvim-treesitter/nvim-treesitter",
+        opts = {
+            highlight = {
+                enable = true,
+                disable = { "latex" },
+            },
+        },
     },
 }

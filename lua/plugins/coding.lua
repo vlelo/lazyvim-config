@@ -77,20 +77,37 @@ return {
     },
     {
         "saghen/blink.cmp",
+        dependencies = {
+            { "xzbdmw/colorful-menu.nvim" },
+        },
         opts = {
             keymap = {
                 ["<C-k>"] = { "select_and_accept" },
             },
             completion = {
                 menu = {
-                    border = "rounded",
+                    -- border = "rounded",
                     scrollbar = true,
+                    draw = {
+                        columns = { { "kind_icon" }, { "label", gap = 1 } },
+                        components = {
+                            label = {
+                                width = { fill = true, max = 60 },
+                                text = function(ctx)
+                                    return require("colorful-menu").blink_components_text(ctx)
+                                end,
+                                highlight = function(ctx)
+                                    return require("colorful-menu").blink_components_highlight(ctx)
+                                end,
+                            },
+                        },
+                    },
                 },
                 documentation = {
                     auto_show = true,
                     auto_show_delay_ms = 200,
                     window = {
-                        border = "rounded",
+                        -- border = "rounded",
                         scrollbar = true,
                     },
                 },
@@ -99,5 +116,13 @@ return {
                 },
             },
         },
+    },
+    {
+        "jmbuhr/otter.nvim",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+        },
+        opts = {},
+        lazy = false,
     },
 }

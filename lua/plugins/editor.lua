@@ -30,6 +30,7 @@ return {
                 "c",
                 "zig",
                 "systemverilog",
+                "latex",
             })
 
             return opts
