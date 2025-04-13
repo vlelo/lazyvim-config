@@ -3,6 +3,7 @@ return {
         "folke/flash.nvim",
         opts = {
             search = {
+                multi_window = true,
                 forward = true,
             },
             modes = {
@@ -12,6 +13,9 @@ return {
                 char = {
                     enabled = false,
                 },
+            },
+            jump = {
+                autojump = true,
             },
         },
         keys = {

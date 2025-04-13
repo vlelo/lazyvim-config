@@ -26,6 +26,7 @@ require("lazy").setup({
         { import = "lazyvim.plugins.extras.lang.yaml" },
         { import = "lazyvim.plugins.extras.lang.clangd" },
         { import = "lazyvim.plugins.extras.lang.docker" },
+        { import = "lazyvim.plugins.extras.lang.toml" },
 
         -- UI
         { import = "lazyvim.plugins.extras.ui.edgy" },
@@ -40,12 +41,15 @@ require("lazy").setup({
         { import = "lazyvim.plugins.extras.coding.yanky" },
         { import = "lazyvim.plugins.extras.coding.luasnip" },
         { import = "lazyvim.plugins.extras.coding.mini-comment" },
+        { import = "lazyvim.plugins.extras.coding.neogen" },
 
         -- Editor
         { import = "lazyvim.plugins.extras.editor.dial" },
         { import = "lazyvim.plugins.extras.editor.inc-rename" },
         { import = "lazyvim.plugins.extras.editor.aerial" },
         { import = "lazyvim.plugins.extras.editor.overseer" },
+        { import = "lazyvim.plugins.extras.editor.snacks_explorer" },
+        { import = "lazyvim.plugins.extras.editor.snacks_picker" },
 
         -- Util
         { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
@@ -57,6 +61,8 @@ require("lazy").setup({
 
         -- Extras
         { import = "lazyvim.plugins.extras.vscode" },
+
+        -- Util
 
         { import = "plugins" },
         { import = "plugins.lang" },

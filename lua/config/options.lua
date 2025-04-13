@@ -58,7 +58,6 @@ if vim.g.neovide then
     vim.g.neovide_cursor_animate_command_line = false
     vim.g.neovide_input_macos_option_key_is_meta = "both"
     vim.g.neovide_input_ime = false
-    vim.notify("Suca porcodio")
 
     update_env_from_login_shell()
 

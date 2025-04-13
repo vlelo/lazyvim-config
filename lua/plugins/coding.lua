@@ -83,10 +83,17 @@ return {
         opts = {
             keymap = {
                 ["<C-k>"] = { "select_and_accept" },
+                ["<C-l>"] = {},
+            },
+            sources = {
+                per_filetype = {
+                    tex = { "lsp", "path", "snippets", "omni" },
+                    latex = { "lsp", "path", "snippets", "omni" },
+                },
             },
             completion = {
                 menu = {
-                    -- border = "rounded",
+                    border = "rounded",
                     scrollbar = true,
                     draw = {
                         columns = { { "kind_icon" }, { "label", gap = 1 } },
@@ -113,6 +120,25 @@ return {
                 },
                 ghost_text = {
                     enabled = true,
+                },
+                accept = { auto_brackets = { enabled = false } },
+            },
+            cmdline = {
+                enabled = true,
+                keymap = {
+                    ["<C-k>"] = { "select_and_accept" },
+                },
+                completion = {
+                    menu = {
+                        auto_show = function(ctx)
+                            return vim.fn.getcmdtype() == ":"
+                            -- enable for inputs as well, with:
+                            -- or vim.fn.getcmdtype() == '@'
+                        end,
+                    },
+                    ghost_text = {
+                        enabled = true,
+                    },
                 },
             },
         },

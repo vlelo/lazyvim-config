@@ -46,6 +46,8 @@ return {
                 options = {
                     "-lualatex",
                     "-verbose",
+                    "-bibtex-cond",
+                    "-bibfudge",
                     "-shell-escape",
                     "-halt-on-error",
                     "-synctex=1",
@@ -78,6 +80,62 @@ return {
             highlight = {
                 enable = true,
                 disable = { "latex" },
+            },
+        },
+    },
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
+            { "barreiroleo/ltex-extra.nvim" },
+        },
+        opts = {
+            servers = {
+                ltex_plus = {
+                    cmd = { "ltex-ls-plus" },
+                    on_attach = function(client, bufnr)
+                        require("ltex_extra").setup()
+                    end,
+                    settings = {
+                        ltex = {
+                            language = "en-US",
+                        },
+                    },
+                },
+                texlab = {
+                    settings = {
+                        texlab = {
+                            build = {
+                                executable = "latexmk",
+                                args = {
+                                    "-lualatex",
+                                    "-bibtex-cond",
+                                    "-bibfudge",
+                                    "-interaction=nonstopmode",
+                                    "-auxdir=./build/",
+                                    "-outdir=./build/",
+                                    "-synctex=1",
+                                    "%f",
+                                },
+                                forwardSearchAfter = false,
+                                auxDirectory = "./aux/",
+                                logDirectory = "./aux/",
+                                pdfDirectory = "./out/pdf/",
+                            },
+                            forwardSearch = {
+                                executable = "skim",
+                            },
+                            completion = { matcher = "prefix-ignore-case" },
+                            experimental = {
+                                -- Include custom package dependencies into the dependency graph:
+                                followPackageLinks = true,
+                                -- List of *additional* environments to consider as enumeration/math/verbatim:
+                                enumEnvironments = {},
+                                mathEnvironments = {},
+                                verbatimEnvironments = { "lstlisting" },
+                            },
+                        },
+                    },
+                },
             },
         },
     },

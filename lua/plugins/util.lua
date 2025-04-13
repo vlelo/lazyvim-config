@@ -23,7 +23,7 @@ return {
                 end,
             },
             -- winbar = {
-            --     enabled = true,
+            --  enabled = true,
             --     name_formatter = function(term) --  term: Terminal
             --         return term.name
             --     end,
@@ -95,9 +95,71 @@ return {
         "nvim-lualine/lualine.nvim",
         opts = {
             extensions = {
-                "toggleterm",
                 "man",
                 "quickfix",
+                "fzf",
+                "lazy",
+                "mason",
+                "neo-tree",
+                "overseer",
+                "trouble",
+                {
+                    filetypes = { "toggleterm" },
+                    sections = {
+                        lualine_a = {
+                            function()
+                                return "ToggleTerm #" .. vim.b.toggle_number
+                            end,
+                        },
+                        lualine_b = {
+                            "mode",
+                            function()
+                                return require("capslock").status_string()
+                            end,
+                        },
+                        lualine_z = {
+                            function()
+                                local id = vim.b.terminal_job_id
+                                if id then
+                                    local info = vim.api.nvim_get_chan_info(id)
+                                    if info and info.argv then
+                                        return info.argv[1]
+                                    end
+                                end
+
+                                -- This will be only the starting process (shell)
+                                local bufname = vim.api.nvim_buf_get_name(0)
+                                -- term://{cwd}//{pid}:{cmd}
+                                -- or in toggleterm:
+                                -- term://{cwd}//{pid}:{cmd};#toggleterm#{num}
+                                return bufname:match("term://.*//%d+:(.+);#toggleterm#%d+") or bufname
+                            end,
+                        },
+                    },
+                },
+                {
+                    filetypes = { "oil" },
+                    sections = {
+                        lualine_a = {
+                            function()
+                                local ok, oil = pcall(require, "oil")
+                                if ok then
+                                    return vim.fn.fnamemodify(oil.get_current_dir(), ":~")
+                                else
+                                    return ""
+                                end
+                            end,
+                        },
+                        lualine_z = {
+                            {
+                                function()
+                                    return vim.fn.fnamemodify(vim.uv.cwd(), ":~")
+                                end,
+                                color = "WarningMsg",
+                            },
+                        },
+                    },
+                },
             },
         },
     },
@@ -113,6 +175,14 @@ return {
                     col = -1,
                 },
             },
+            indent = {
+                filter = function(buf)
+                    return vim.g.snacks_indent ~= false
+                        and vim.b[buf].snacks_indent ~= false
+                        and vim.bo[buf].buftype == ""
+                        and vim.bo[buf].filetype ~= "tex"
+                end,
+            },
             image = {
                 enabled = true,
                 wo = {
@@ -122,6 +192,26 @@ return {
                     inline = false,
                     max_width = 45,
                     max_height = 20,
+                },
+                math = {
+                    latex = {
+                        packages = {
+                            "amsmath",
+                            "amssymb",
+                            "amsfonts",
+                            "amscd",
+                            "mathtools",
+                            "bm",
+                            "epmheq",
+                            "xfrac",
+                            "siunitx",
+                            "mhchem",
+                            "fmtcount",
+                            "tikz",
+                            "circuitikz",
+                            "tikz-timing",
+                        },
+                    },
                 },
             },
             dashboard = {

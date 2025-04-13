@@ -35,40 +35,43 @@ end, { desc = "Restart Neovim session" })
 --     desc = "Remove `o` formatoptions set by most ftplugins.",
 -- })
 
-vim.api.nvim_create_autocmd({ "User" }, {
-    pattern = "ExitPreventCleanup",
-    group = augroup("exit_is_reset_callback"),
-    callback = function()
-        vim.cmd("tabclose #")
-        require("snacks").dashboard()
-        vim.fn.chdir(vim.fn.expand("~", nil, nil))
-        local startpage = vim.api.nvim_get_current_buf()
-        local buffers = vim.api.nvim_list_bufs()
-        for _, buf in ipairs(buffers) do
-            if buf ~= startpage then
-                vim.api.nvim_buf_delete(buf, { force = true })
+if vim.g.neovide then
+    vim.api.nvim_create_autocmd({ "User" }, {
+        pattern = "ExitPreventCleanup",
+        group = augroup("exit_is_reset_callback"),
+        callback = function()
+            vim.cmd("tabclose #")
+            require("snacks").dashboard()
+            vim.fn.chdir(vim.fn.expand("~", nil, nil))
+            local startpage = vim.api.nvim_get_current_buf()
+            local buffers = vim.api.nvim_list_bufs()
+            for _, buf in ipairs(buffers) do
+                if buf ~= startpage then
+                    vim.api.nvim_buf_delete(buf, { force = true })
+                end
             end
-        end
-    end,
-    desc = "Cleanup after preventing vim from exiting.",
-})
+        end,
+        desc = "Cleanup after preventing vim from exiting.",
+    })
 
-if vim.fn.argc() ~= 0 then
-    vim.g.force_exit = true
+    if vim.fn.argc() ~= 0 then
+        vim.g.force_exit = true
+    end
+
+    vim.api.nvim_create_autocmd({ "ExitPre" }, {
+        group = augroup("exit_is_reset"),
+        callback = function()
+            if vim.g.force_exit == true then
+                return
+            end
+            vim.cmd("tabnew ~")
+            vim.api.nvim_exec_autocmds("User", {
+                pattern = "ExitPreventCleanup",
+            })
+        end,
+        desc = "Close all buffers and reset to Home when exiting in GUI and not forcing",
+    })
 end
-vim.api.nvim_create_autocmd({ "ExitPre" }, {
-    group = augroup("exit_is_reset"),
-    callback = function()
-        if vim.g.force_exit == true then
-            return
-        end
-        vim.cmd("tabnew ~")
-        vim.api.nvim_exec_autocmds("User", {
-            pattern = "ExitPreventCleanup",
-        })
-    end,
-    desc = "Close all buffers and reset to Home when exiting in GUI and not forcing",
-})
 
 vim.api.nvim_create_autocmd({ "TermOpen" }, {
     group = augroup("terminal_settings"),

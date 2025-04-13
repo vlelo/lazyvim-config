@@ -205,7 +205,10 @@ require("unimpaired").setup({
     },
 })
 
-vim.keymap.set({ "i", "n", "t" }, "<D-v>", '<ESC>"+p', { desc = "MacOS Paste" })
+vim.keymap.set({ "i" }, "<D-v>", "<C-r>+", { desc = "MacOS Paste" })
+vim.keymap.set({ "n" }, "<D-v>", '<ESC>"+p', { desc = "MacOS Paste" })
+vim.keymap.set({ "t" }, "<D-v>", '<C-\\><C-n>"+p', { desc = "MacOS Paste" })
+
 vim.keymap.set({ "v" }, "<D-c>", '"+y', { desc = "MacOS Copy" })
 vim.keymap.set({ "n" }, "<leader>qq", function()
     vim.g.force_exit = true
