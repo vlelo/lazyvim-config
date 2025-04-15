@@ -86,15 +86,12 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            { "barreiroleo/ltex-extra.nvim" },
+            { "barreiroleo/ltex-extra.nvim", branch = "dev", ft = { "markdown", "tex" } },
         },
         opts = {
             servers = {
                 ltex_plus = {
                     cmd = { "ltex-ls-plus" },
-                    on_attach = function(client, bufnr)
-                        require("ltex_extra").setup()
-                    end,
                     settings = {
                         ltex = {
                             language = "en-US",

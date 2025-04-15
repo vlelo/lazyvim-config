@@ -287,6 +287,7 @@ return {
                         indent = 2,
                         padding = 1,
                         limit = 10,
+                        cwd = true,
                     },
                     {
                         pane = 2,
@@ -296,6 +297,8 @@ return {
                         indent = 2,
                         padding = 1,
                         limit = 10,
+                        pick = true,
+                        session = false,
                     },
                     { section = "startup" },
                 },

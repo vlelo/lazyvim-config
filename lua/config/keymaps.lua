@@ -205,7 +205,7 @@ require("unimpaired").setup({
     },
 })
 
-vim.keymap.set({ "i" }, "<D-v>", "<C-r>+", { desc = "MacOS Paste" })
+vim.keymap.set({ "i" }, "<D-v>", "<C-r><C-o>+", { desc = "MacOS Paste" })
 vim.keymap.set({ "n" }, "<D-v>", '<ESC>"+p', { desc = "MacOS Paste" })
 vim.keymap.set({ "t" }, "<D-v>", '<C-\\><C-n>"+p', { desc = "MacOS Paste" })
 
@@ -214,3 +214,16 @@ vim.keymap.set({ "n" }, "<leader>qq", function()
     vim.g.force_exit = true
     vim.cmd("qa")
 end, { desc = "Quit All" })
+
+if vim.g.neovide then
+    -- vim.keymap.set("n", "<D-n>", "<cmd>silent exec '!cd ~ && neovide --fork'<cr>", { desc = "Open new Neovide window" })
+    vim.keymap.set("n", "<D-n>", function()
+        ---@diagnostic disable-next-line: missing-fields
+        local handle, pid = vim.uv.spawn("neovide", {
+            args = { "--fork" },
+            cwd = vim.fn.expand("~", nil, nil),
+        }, function(code, signal) end)
+
+        vim.uv.unref(handle)
+    end, { desc = "Open new Neovide window" })
+end

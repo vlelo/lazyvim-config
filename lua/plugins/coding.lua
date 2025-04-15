@@ -25,6 +25,7 @@ return {
         "L3MON4D3/LuaSnip",
         opts = function(_, opts)
             local types = require("luasnip.util.types")
+            require("luasnip.loaders.from_lua").load({ paths = { vim.fn.stdpath("config") .. "/snippets" } })
             opts.ext_opts = {
                 [types.choiceNode] = {
                     active = {

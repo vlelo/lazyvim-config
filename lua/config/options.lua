@@ -32,6 +32,9 @@ vim.opt.listchars:append("trail:+")
 
 vim.opt.iskeyword:append("-")
 
+-- default: "!,'100,<50,s10,h:"
+vim.opt.shada = "!,'300,<50,s30,h"
+
 -- LazyVim options
 vim.g.lazyvim_python_lsp = "basedpyright"
 -- vim.g.lazyvim_picker = "telescope"

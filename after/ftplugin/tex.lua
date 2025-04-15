@@ -6,10 +6,6 @@ vim.o.cmdheight = 1
 vim.o.sidescrolloff = 0
 vim.o.conceallevel = 0
 
--- vim.diagnostic.config({
--- 	update_in_insert = false,
--- })
-
 vim.keymap.set("n", "<leader>lc", "<plug>(vimtex-compile)", { desc = "Compile document", buffer = true })
 vim.keymap.set("n", "<leader>lc", "<plug>(vimtex-compile)", { desc = "Compile document", buffer = true })
 vim.keymap.set("n", "<leader>lC", "<plug>(vimtex-compile-ss)", { desc = "Compile document one time", buffer = true })

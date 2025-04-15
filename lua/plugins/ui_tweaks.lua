@@ -40,6 +40,11 @@ return {
             presets = {
                 lsp_doc_border = true,
             },
+            lsp = {
+                progress = {
+                    enabled = false,
+                },
+            },
         },
     },
     {
@@ -57,6 +62,16 @@ return {
             },
             win = {
                 border = "rounded",
+            },
+        },
+    },
+    {
+        "j-hui/fidget.nvim",
+        opts = {
+            progress = {
+                ignore = {
+                    "ltex_plus",
+                },
             },
         },
     },
