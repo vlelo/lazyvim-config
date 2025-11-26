@@ -1,7 +1,8 @@
 return {
     {
         "lervag/vimtex",
-        config = function(_, _)
+        lazy = false,
+        init = function()
             -- vimtex
             vim.g.vimtex_imaps_enabled = 1
             -- vim.g.vimtex_imaps_leader = ';'
@@ -37,8 +38,8 @@ return {
                 xelatex = "-xelatex",
             }
             vim.g.vimtex_compiler_latexmk = {
-                aux_dir = "aux",
-                out_dir = "out/pdf",
+                aux_dir = ".aux",
+                out_dir = "out",
                 callback = 1,
                 continuous = 1,
                 executable = "latexmk",
@@ -84,20 +85,24 @@ return {
         },
     },
     {
+        "https://github.com/let-def/texpresso.vim",
+        ft = { "tex", "latex" },
+    },
+    {
         "neovim/nvim-lspconfig",
-        dependencies = {
-            { "barreiroleo/ltex-extra.nvim", branch = "dev", ft = { "markdown", "tex" } },
-        },
+        -- dependencies = {
+        --     { "barreiroleo/ltex-extra.nvim", branch = "dev", ft = { "markdown", "tex" } },
+        -- },
         opts = {
             servers = {
-                ltex_plus = {
-                    cmd = { "ltex-ls-plus" },
-                    settings = {
-                        ltex = {
-                            language = "en-US",
-                        },
-                    },
-                },
+                -- ltex_plus = {
+                --     cmd = { "ltex-ls-plus" },
+                --     settings = {
+                --         ltex = {
+                --             language = "en-US",
+                --         },
+                --     },
+                -- },
                 texlab = {
                     settings = {
                         texlab = {

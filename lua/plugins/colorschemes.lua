@@ -141,5 +141,39 @@ return {
     {
         "rebelot/kanagawa.nvim",
         event = "VeryLazy",
+        opts = {
+            overrides = function(colors)
+                local theme = colors.theme
+
+                -- vim.api.nvim_set_hl(0, "NoiceCmdline", { link = "@comment.error" })
+                -- vim.api.nvim_set_hl(0, "NoiceCmdline", { link = "@comment.error" })
+
+                vim.api.nvim_set_hl(0, "NoiceCmdlineIcon", { link = "SnacksPickerFile" })
+                vim.api.nvim_set_hl(0, "NoiceCmdlineIconCalculator", { link = "SnacksPickerCode" })
+                vim.api.nvim_set_hl(0, "NoiceCmdlineIconCmdline", { link = "SnacksPickerIdx" })
+                vim.api.nvim_set_hl(0, "NoiceCmdlineIconFilter", { link = "SnacksPickerGitBreaking" })
+                vim.api.nvim_set_hl(0, "NoiceCmdlineIconHelp", { link = "SnacksPickerGitIssue" })
+                vim.api.nvim_set_hl(0, "NoiceCmdlineIconIncRename", { link = "SnacksPickerAuEvent" })
+                vim.api.nvim_set_hl(0, "NoiceCmdlineIconInput", { link = "SnacksPickerPrompt" })
+                vim.api.nvim_set_hl(0, "NoiceCmdlineIconLua", { link = "SnacksPickerCmd" })
+                vim.api.nvim_set_hl(0, "NoiceCmdlineIconSearch", { link = "SnacksPickerAuGroup" })
+
+                vim.api.nvim_set_hl(0, "NoiceCmdlinePopup", { link = "SnacksPickerPrompt" })
+                vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", { link = "SnacksPickerPrompt" })
+
+                -- vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderCalculator", { link = "@comment.error" })
+                -- vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderCmdline", { link = "@comment.error" })
+                -- vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderFilter", { link = "@comment.error" })
+                -- vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderHelp", { link = "@comment.error" })
+                -- vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderIncRename", { link = "@comment.error" })
+                -- vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderInput", { link = "@comment.error" })
+                -- vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderLua", { link = "@comment.error" })
+                -- vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderSearch", { link = "@comment.error" })
+                -- vim.api.nvim_set_hl(0, "NoiceCmdlinePopupTitle", { link = "@comment.error" })
+                -- vim.api.nvim_set_hl(0, "NoiceCmdlinePrompt", { link = "@comment.error" })
+
+                return {}
+            end,
+        },
     },
 }

@@ -44,64 +44,133 @@ return {
             },
         },
     },
-    {
-        "OXY2DEV/foldtext.nvim",
-        -- lazy = false,
-        opts = {
-            default = {
-                -- {
-                --     type = "indent",
-                --     hl = "TabLineSel",
-                -- },
-                -- {
-                --     type = "raw",
-                --     text = " ",
-                --     hl = "Title",
-                -- },
-                {
-                    type = "raw",
-                    text = function(_, buf)
-                        local ln = vim.fn.getbufline(buf, vim.v.foldstart)
-
-                        return ln
-                    end,
-                },
-                {
-                    type = "raw",
-                    text = function(win, buf)
-                        local ln = vim.fn.getbufline(buf, vim.v.foldstart)[1]:len()
-                        local w = vim.api.nvim_win_get_width(win)
-                        local off = vim.fn.getwininfo(win)[1].textoff
-                        local diff = vim.fn.strchars(" " .. tostring(vim.v.foldend - vim.v.foldstart) .. " lines ")
-
-                        return string.rep("─", math.floor((w - off - diff - ln) / 2))
-                    end,
-                    hl = "Comment",
-
-                    gradient_repeat = true,
-                },
-                {
-                    type = "fold_size",
-                    prefix = " ",
-                    postfix = " lines ",
-                },
-                {
-                    type = "raw",
-                    text = function(win, buf)
-                        local ln = vim.fn.getbufline(buf, vim.v.foldstart)[1]:len()
-                        local w = vim.api.nvim_win_get_width(win)
-                        local off = vim.fn.getwininfo(win)[1].textoff
-                        local diff = tostring(vim.v.foldend - vim.v.foldstart)
-
-                        return string.rep("─", math.ceil((w - off - 2 - ln - vim.fn.strchars(diff)) / 2))
-                    end,
-                    hl = "Comment",
-
-                    gradient_repeat = true,
-                },
-            },
-        },
-    },
+    -- {
+    --     "OXY2DEV/foldtext.nvim",
+    --     -- lazy = false,
+    --     opts = {
+    --         styles = {
+    --             default = {
+    --                 {
+    --                     kind = "bufline",
+    --                     delimiter = "...",
+    --                     hl = "@comment",
+    --                 },
+    --                 {
+    --                     kind = "section",
+    --                     output = {
+    --                         { " ", "@comment" },
+    --                         { "----", "@comment" },
+    --                     },
+    --                 },
+    --                 {
+    --                     kind = "fold_size",
+    --                     condition = function()
+    --                         return true
+    --                     end,
+    --                     hl = "@number",
+    --
+    --                     icon = "󰘕 ",
+    --                     icon_hl = "@string",
+    --
+    --                     padding_left = " ",
+    --                     padding_left_hl = nil,
+    --                     padding_right = " ",
+    --                     padding_right_hl = nil,
+    --                 },
+    --                 -- {
+    --                 --     kind = "section",
+    --                 --     output = {
+    --                 --         { "----", "@comment" },
+    --                 --     },
+    --                 -- },
+    --                 -- {
+    --                 --     kind = "section",
+    --                 --     output = function(_, window)
+    --                 --         local diag_icons = {
+    --                 --             [vim.diagnostic.severity.ERROR] = "󰅙 ",
+    --                 --             [vim.diagnostic.severity.WARN] = " ",
+    --                 --             [vim.diagnostic.severity.INFO] = " ",
+    --                 --             [vim.diagnostic.severity.HINT] = "󱠃 ",
+    --                 --         }
+    --                 --         local diag_hls = {
+    --                 --             [vim.diagnostic.severity.ERROR] = "DiagnosticError",
+    --                 --             [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
+    --                 --             [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+    --                 --             [vim.diagnostic.severity.HINT] = "DiagnosticHint",
+    --                 --         }
+    --                 --
+    --                 --         local diag_counts = {}
+    --                 --         for lnum = vim.v.foldstart - 1, vim.v.foldend - 1 do
+    --                 --             for severity, value in pairs(vim.diagnostic.count(0, { lnum = lnum })) do
+    --                 --                 diag_counts[severity] = value + (diag_counts[severity] or 0)
+    --                 --             end
+    --                 --         end
+    --                 --
+    --                 --         local chunks = {}
+    --                 --         for severity = vim.diagnostic.severity.ERROR, vim.diagnostic.severity.HINT do
+    --                 --             if diag_counts[severity] then
+    --                 --                 table.insert(chunks, {
+    --                 --                     string.format(" %s%d", diag_icons[severity], diag_counts[severity]),
+    --                 --                     diag_hls[severity],
+    --                 --                 })
+    --                 --                 table.insert(chunks, { " --", "@comment" })
+    --                 --             end
+    --                 --         end
+    --                 --         return chunks
+    --                 --     end,
+    --                 -- },
+    --                 -- {
+    --                 --     kind = "section",
+    --                 --     output = {
+    --                 --         { "--", "@comment" },
+    --                 --     },
+    --                 -- },
+    --                 -- {
+    --                 --     kind = "section",
+    --                 --     condition = function()
+    --                 --         return vim.o.hlsearch and vim.v.hlsearch ~= 0
+    --                 --     end,
+    --                 --     output = function(_, window)
+    --                 --         -- if not vim.o.hlsearch or vim.v.hlsearch == 0 then
+    --                 --         --     return {}
+    --                 --         -- end
+    --                 --         local sucess, matches =
+    --                 --             pcall(vim.fn.matchbufline, 0, vim.fn.getreg("/"), vim.v.foldstart, vim.v.foldend)
+    --                 --         if not sucess then
+    --                 --             return
+    --                 --         end
+    --                 --
+    --                 --         local searchcount = #matches
+    --                 --         -- if searchcount > 0 then
+    --                 --         return {
+    --                 --             { " ", "@comment" },
+    --                 --             { " ", "@string" },
+    --                 --             { tostring(searchcount), "@number" },
+    --                 --             { " ", "@comment" },
+    --                 --         }
+    --                 --         -- end
+    --                 --     end,
+    --                 -- },
+    --                 -- {
+    --                 --     kind = "section",
+    --                 --     output = function(_, window)
+    --                 --         local width = vim.api.nvim_win_get_width(window)
+    --                 --         local textoff = vim.fn.getwininfo(window)[1].textoff
+    --                 --
+    --                 --         width = width - textoff
+    --                 --
+    --                 --         local size = (vim.v.foldend - vim.v.foldstart) + 1
+    --                 --         local len = vim.fn.strdisplaywidth(" " .. tostring(size) .. " lines ")
+    --                 --
+    --                 --         return {
+    --                 --             { string.rep("-", math.ceil(width - len)), "@comment" },
+    --                 --         }
+    --                 --     end,
+    --                 -- },
+    --             },
+    --         },
+    --     },
+    -- },
     { "tiagovla/scope.nvim", config = true },
     {
         "nvim-zh/colorful-winsep.nvim",

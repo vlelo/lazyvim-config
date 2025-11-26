@@ -1,4 +1,38 @@
+local LazyVim = require("lazyvim.util")
+local function dash_header()
+    if vim.g.neovide then
+        return [[
+███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███████╗ ███████╗
+████╗  ██║██╔════╝██╔═══██╗██║   ██║██║██╔═══██╗██╔════╝
+██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██║   ██║█████╗  
+██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║   ██║██╔══╝  
+██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║███████╔╝███████╗
+╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚══════╝ ╚══════╝]]
+    else
+        return [[
+███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]]
+    end
+end
 return {
+    {
+        "OXY2DEV/markview.nvim",
+        lazy = false,
+        opts = {
+            experimental = { check_rtp_message = false },
+            html = {
+                enable = false,
+            },
+            latex = {
+                enable = false,
+            },
+        },
+    },
+
     {
         "akinsho/toggleterm.nvim",
         version = "*",
@@ -94,6 +128,35 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         opts = {
+            options = {
+                disabled_filetypes = { winbar = { "dashboard", "alpha", "ministarter", "snacks_dashboard" } },
+            },
+            winbar = {
+                lualine_a = {},
+                lualine_b = { { LazyVim.lualine.pretty_path() } },
+                lualine_c = {},
+                lualine_x = {},
+                lualine_y = {
+                    {
+                        "aerial",
+                        sep = " ", -- separator between symbols
+                        sep_icon = "", -- separator between icon and symbol
+                        depth = 5,
+                        dense = false,
+                        dense_sep = ".",
+                        colored = true,
+                    },
+                },
+            },
+            lualine_z = {},
+            inactive_winbar = {
+                lualine_a = {},
+                lualine_b = { { LazyVim.lualine.pretty_path() } },
+                lualine_c = {},
+                lualine_x = {},
+                lualine_y = {},
+                lualine_z = {},
+            },
             extensions = {
                 "man",
                 "quickfix",
@@ -164,6 +227,20 @@ return {
         },
     },
     {
+        "nvim-lualine/lualine.nvim",
+        opts = function(_, opts)
+            -- brute force remove copilot
+            table.remove(opts.sections.lualine_x, 2)
+
+            -- brute force remove aerial
+            table.remove(opts.sections.lualine_c, #opts.sections.lualine_c)
+
+            -- remove time
+            table.remove(opts.sections.lualine_z, 1)
+            return opts
+        end,
+    },
+    {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
@@ -210,6 +287,17 @@ return {
                             "tikz",
                             "circuitikz",
                             "tikz-timing",
+                            "nicematrix",
+                        },
+                    },
+                },
+            },
+            picker = {
+                win = {
+                    input = {
+                        keys = {
+                            ["<M-n>"] = { "toggle_hidden", mode = { "i", "n" } },
+                            ["<M-m>"] = { "toggle_maximize", mode = { "i", "n" } },
                         },
                     },
                 },
@@ -268,13 +356,7 @@ return {
                             end,
                         },
                     },
-                    header = [[
-███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
-████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
-██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
-██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
-██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
+                    header = dash_header(),
                 },
                 sections = {
                     { section = "header", pane = 1 },
@@ -304,5 +386,27 @@ return {
                 },
             },
         },
+    },
+    {
+        "hat0uma/csvview.nvim",
+        ---@module "csvview"
+        ---@type CsvView.Options
+        opts = {
+            parser = { comments = { "#", "//" } },
+            keymaps = {
+                -- Text objects for selecting fields
+                textobject_field_inner = { "if", mode = { "o", "x" } },
+                textobject_field_outer = { "af", mode = { "o", "x" } },
+                -- Excel-like navigation:
+                -- Use <Tab> and <S-Tab> to move horizontally between fields.
+                -- Use <Enter> and <S-Enter> to move vertically between rows and place the cursor at the end of the field.
+                -- Note: In terminals, you may need to enable CSI-u mode to use <S-Tab> and <S-Enter>.
+                jump_next_field_end = { "<Tab>", mode = { "n", "v" } },
+                jump_prev_field_end = { "<S-Tab>", mode = { "n", "v" } },
+                jump_next_row = { "<Enter>", mode = { "n", "v" } },
+                jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
+            },
+        },
+        cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
     },
 }

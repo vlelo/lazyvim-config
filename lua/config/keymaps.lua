@@ -227,3 +227,22 @@ if vim.g.neovide then
         vim.uv.unref(handle)
     end, { desc = "Open new Neovide window" })
 end
+
+vim.keymap.del("n", "<leader>l")
+vim.keymap.del("n", "<leader>L")
+
+vim.keymap.set("n", "go", function()
+    local dir = vim.fn.expand("%:p:h")
+    local uname = vim.loop.os_uname().sysname
+    if uname == "Linux" then
+        os.execute("xdg-open " .. dir)
+    elseif uname == "Darwin" then
+        os.execute("open " .. dir)
+    elseif uname == "Windows_NT" then
+        os.execute("explorer.exe " .. dir)
+    else
+        vim.notify("Unsupported OS: " .. uname)
+    end
+end, {
+    desc = "Open folder",
+})

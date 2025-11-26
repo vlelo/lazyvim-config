@@ -11,8 +11,8 @@ vim.opt.hidden = true
 
 vim.opt.tabstop = 8
 vim.opt.expandtab = true
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 8
+vim.opt.softtabstop = 8
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.cindent = true
@@ -33,11 +33,16 @@ vim.opt.listchars:append("trail:+")
 vim.opt.iskeyword:append("-")
 
 -- default: "!,'100,<50,s10,h:"
-vim.opt.shada = "!,'300,<50,s30,h"
+-- vim.opt.shada = "!,'300,<50,s30,h"
 
 -- LazyVim options
-vim.g.lazyvim_python_lsp = "basedpyright"
+vim.g.lazyvim_python_lsp = "pyright"
+vim.g.trouble_lualine = true
 -- vim.g.lazyvim_picker = "telescope"
+
+vim.g.spellfile_URL = "http://ftp.vim.org/vim/runtime/spell"
+vim.opt.spelllang = { "en_us", "it" }
+vim.opt.exrc = true
 
 if vim.g.neovide then
     local function update_env_from_login_shell()

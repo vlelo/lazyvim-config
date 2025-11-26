@@ -1,6 +1,6 @@
 return {
     {
-        "echasnovski/mini.surround",
+        "nvim-mini/mini.surround",
         opts = {
             n_lines = 80,
             silent = true,
@@ -21,6 +21,7 @@ return {
             return opts
         end,
     },
+    { "rafamadriz/friendly-snippets", enabled = false },
     {
         "L3MON4D3/LuaSnip",
         opts = function(_, opts)
@@ -41,6 +42,7 @@ return {
                     require("luasnip").jump(1)
                 end,
                 mode = { "i", "s" },
+                desc = "LuaSnip jump forward",
             },
             {
                 "<c-z>",
@@ -48,6 +50,18 @@ return {
                     require("luasnip").jump(-1)
                 end,
                 mode = { "i", "s" },
+                desc = "LuaSnip jump backward",
+            },
+            {
+                "<c-c>",
+                function()
+                    if require("luasnip").choice_active() then
+                        require("luasnip").change_choice(1)
+                        -- require("luasnip.extras.select_choice")()
+                    end
+                end,
+                mode = { "i", "s" },
+                desc = "LuaSnip choice next",
             },
         },
     },
